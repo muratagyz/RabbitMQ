@@ -5,7 +5,11 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQPublisher", "RabbitMQPublisher\RabbitMQPublisher.csproj", "{2FB744E5-2D47-44C8-99B6-0A99C77338C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQConsumer", "RabbitMQConsumer\RabbitMQConsumer.csproj", "{EC092893-89A7-4364-A141-E0CB160E8481}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQConsumer", "RabbitMQConsumer\RabbitMQConsumer.csproj", "{EC092893-89A7-4364-A141-E0CB160E8481}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQPublisherV2", "RabbitMQPublisherV2\RabbitMQPublisherV2.csproj", "{623E29C0-36E8-4393-B308-5CFE54BB129C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQConsumerV2", "RabbitMQConsumerV2\RabbitMQConsumerV2.csproj", "{099DCDEC-4CCF-4701-AD53-C57EBA8B661B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{EC092893-89A7-4364-A141-E0CB160E8481}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC092893-89A7-4364-A141-E0CB160E8481}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC092893-89A7-4364-A141-E0CB160E8481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{623E29C0-36E8-4393-B308-5CFE54BB129C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{623E29C0-36E8-4393-B308-5CFE54BB129C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{623E29C0-36E8-4393-B308-5CFE54BB129C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{623E29C0-36E8-4393-B308-5CFE54BB129C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{099DCDEC-4CCF-4701-AD53-C57EBA8B661B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{099DCDEC-4CCF-4701-AD53-C57EBA8B661B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{099DCDEC-4CCF-4701-AD53-C57EBA8B661B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{099DCDEC-4CCF-4701-AD53-C57EBA8B661B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
