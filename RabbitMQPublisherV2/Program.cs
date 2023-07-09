@@ -11,21 +11,38 @@ using IConnection connection = factory.CreateConnection();
 using IModel channel = connection.CreateModel();
 #endregion
 
-#region Work Queue
+#region Fanout Exchange
 
-channel.QueueDeclare("hello-queue", true, false, false);
+channel.ExchangeDeclare("logs-fanout", durable: true, type: ExchangeType.Fanout);
 
 Enumerable.Range(1, 50).ToList().ForEach(x =>
 {
-    string message = $"Message {x}";
+    string message = $"log {x}";
 
     var messageBody = Encoding.UTF8.GetBytes(message);
 
-    channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
+    channel.BasicPublish("logs-fanout", "", null, messageBody);
 
     Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
 });
 
 #endregion
+
+//#region Work Queue
+
+//channel.QueueDeclare("hello-queue", true, false, false);
+
+//Enumerable.Range(1, 50).ToList().ForEach(x =>
+//{
+//    string message = $"Message {x}";
+
+//    var messageBody = Encoding.UTF8.GetBytes(message);
+
+//    channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
+
+//    Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
+//});
+
+//#endregion
 
 Console.ReadLine();

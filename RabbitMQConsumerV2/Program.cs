@@ -12,13 +12,17 @@ using IConnection connection = factory.CreateConnection();
 using IModel channel = connection.CreateModel();
 #endregion
 
-#region Work Queue
+#region Fanout Exchange
+
+var randomQueueName = channel.QueueDeclare().QueueName;
+
+channel.QueueBind(randomQueueName, "logs-fanout", "", null);
 
 channel.BasicQos(0, 1, false);
 
 var consumer = new EventingBasicConsumer(channel);
 
-channel.BasicConsume("hello-queue", false, consumer);
+channel.BasicConsume(randomQueueName, false, consumer);
 
 consumer.Received += (sender, eventArgs) =>
 {
@@ -32,5 +36,26 @@ consumer.Received += (sender, eventArgs) =>
 };
 
 #endregion
+
+//#region Work Queue
+
+//channel.BasicQos(0, 1, false);
+
+//var consumer = new EventingBasicConsumer(channel);
+
+//channel.BasicConsume("hello-queue", false, consumer);
+
+//consumer.Received += (sender, eventArgs) =>
+//{
+//    var message = Encoding.UTF8.GetString(eventArgs.Body.ToArray());
+
+//    Thread.Sleep(1500);
+
+//    Console.WriteLine($"Gelen Mesaj : {message}");
+
+//    channel.BasicAck(eventArgs.DeliveryTag, false);
+//};
+
+//#endregion
 
 Console.ReadLine();
