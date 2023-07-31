@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using RabbitMQ.Client;
+using RabbitMQPublisherV2;
 
 #region Base
 //Connection
@@ -11,22 +12,45 @@ using IConnection connection = factory.CreateConnection();
 using IModel channel = connection.CreateModel();
 #endregion
 
-#region Fanout Exchange
 
-channel.ExchangeDeclare("logs-fanout", durable: true, type: ExchangeType.Fanout);
+#region Topic Exchange
+channel.ExchangeDeclare("logs-topic", durable: true, type: ExchangeType.Topic);
 
+Random rnd = new Random();
 Enumerable.Range(1, 50).ToList().ForEach(x =>
 {
-    string message = $"log {x}";
+    LogNames log1 = (LogNames)rnd.Next(1, 5);
+    LogNames log2 = (LogNames)rnd.Next(1, 5);
+    LogNames log3 = (LogNames)rnd.Next(1, 5);
 
+    string routeKey = $"{log1}.{log2}.{log3}";
+    string message = $"log-type: {log1}-{log2}-{log3}";
     var messageBody = Encoding.UTF8.GetBytes(message);
 
-    channel.BasicPublish("logs-fanout", "", null, messageBody);
+    channel.BasicPublish("logs-topic", routeKey, null, messageBody);
 
     Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
 });
 
+
 #endregion
+
+//#region Fanout Exchange
+
+//channel.ExchangeDeclare("logs-fanout", durable: true, type: ExchangeType.Fanout);
+
+//Enumerable.Range(1, 50).ToList().ForEach(x =>
+//{
+//    string message = $"log {x}";
+
+//    var messageBody = Encoding.UTF8.GetBytes(message);
+
+//    channel.BasicPublish("logs-fanout", "", null, messageBody);
+
+//    Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
+//});
+
+//#endregion
 
 //#region Work Queue
 

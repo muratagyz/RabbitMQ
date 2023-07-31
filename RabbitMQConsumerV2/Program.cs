@@ -12,17 +12,17 @@ using IConnection connection = factory.CreateConnection();
 using IModel channel = connection.CreateModel();
 #endregion
 
-#region Fanout Exchange
-
-var randomQueueName = channel.QueueDeclare().QueueName;
-
-channel.QueueBind(randomQueueName, "logs-fanout", "", null);
+#region Topic Exchange
+channel.ExchangeDeclare("logs-topic", durable: true, type: ExchangeType.Topic);
 
 channel.BasicQos(0, 1, false);
-
 var consumer = new EventingBasicConsumer(channel);
 
-channel.BasicConsume(randomQueueName, false, consumer);
+var queueName = channel.QueueDeclare().QueueName;
+var routekey = "*.Error.*";
+channel.QueueBind(queueName, "logs-topic", routekey);
+
+channel.BasicConsume(queueName, false, consumer);
 
 consumer.Received += (sender, eventArgs) =>
 {
@@ -35,7 +35,33 @@ consumer.Received += (sender, eventArgs) =>
     channel.BasicAck(eventArgs.DeliveryTag, false);
 };
 
+
 #endregion
+
+//#region Fanout Exchange
+
+//var randomQueueName = channel.QueueDeclare().QueueName;
+
+//channel.QueueBind(randomQueueName, "logs-fanout", "", null);
+
+//channel.BasicQos(0, 1, false);
+
+//var consumer = new EventingBasicConsumer(channel);
+
+//channel.BasicConsume(randomQueueName, false, consumer);
+
+//consumer.Received += (sender, eventArgs) =>
+//{
+//    var message = Encoding.UTF8.GetString(eventArgs.Body.ToArray());
+
+//    Thread.Sleep(1500);
+
+//    Console.WriteLine($"Gelen Mesaj : {message}");
+
+//    channel.BasicAck(eventArgs.DeliveryTag, false);
+//};
+
+//#endregion
 
 //#region Work Queue
 
