@@ -34,44 +34,44 @@ Console.Read();
 
 
 #region Default : Round-Robin Dispatching
-////Queue creating
-//channel.QueueDeclare(queue: "example-queue", exclusive: false);
+//Queue creating
+channel.QueueDeclare(queue: "example-queue", exclusive: false);
 
-////Queue message reading
-//EventingBasicConsumer consumer = new(channel);
-//channel.BasicConsume(queue: "example-queue", autoAck: false, consumer);
-//consumer.Received += (sender, e) =>
-//{
-//    //Queue get messages
-//    Console.WriteLine(Encoding.UTF8.GetString(e.Body.Span));
-//};
+//Queue message reading
+EventingBasicConsumer consumer2 = new(channel);
+channel.BasicConsume(queue: "example-queue", autoAck: false, consumer2);
+consumer2.Received += (sender, e) =>
+{
+    //Queue get messages
+    Console.WriteLine(Encoding.UTF8.GetString(e.Body.Span));
+};
 
-//Console.Read();
+Console.Read();
 #endregion
 
 #region Message Acknowledgement
-////Connection
-//ConnectionFactory factory = new();
-//factory.Uri = new("amqps://omqimsrq:4loIcS64HHTLB04sDnzMtji9C_5GYgIa@woodpecker.rmq.cloudamqp.com/omqimsrq");
+//Connection
+ConnectionFactory factory2 = new();
+factory2.Uri = new("amqps://omqimsrq:4loIcS64HHTLB04sDnzMtji9C_5GYgIa@woodpecker.rmq.cloudamqp.com/omqimsrq");
 
-////Connection activation and channel opening
-//using IConnection connection = factory.CreateConnection();
-//using IModel channel = connection.CreateModel();
+//Connection activation and channel opening
+using IConnection connection2 = factory2.CreateConnection();
+using IModel channel2 = connection2.CreateModel();
 
-////Queue creating
-//channel.QueueDeclare(queue: "example-queue", exclusive: false);
+//Queue creating
+channel2.QueueDeclare(queue: "example-queue", exclusive: false);
 
-////Queue message reading
-//EventingBasicConsumer consumer = new(channel);
-//channel.BasicConsume(queue: "example-queue", autoAck: false, consumer);
-//consumer.Received += (sender, e) =>
-//{
-//    //Queue get messages
-//    Console.WriteLine(Encoding.UTF8.GetString(e.Body.Span));
-//    Task.Delay(3000);
+//Queue message reading
+EventingBasicConsumer consumer3 = new(channel2);
+channel2.BasicConsume(queue: "example-queue", autoAck: false, consumer3);
+consumer3.Received += (sender, e) =>
+{
+    //Queue get messages
+    Console.WriteLine(Encoding.UTF8.GetString(e.Body.Span));
+    Task.Delay(3000);
 
-//    channel.BasicAck(e.DeliveryTag, multiple: false);
-//};
+    channel2.BasicAck(e.DeliveryTag, multiple: false);
+};
 
-//Console.Read();
+Console.Read();
 #endregion

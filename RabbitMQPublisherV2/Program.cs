@@ -35,38 +35,38 @@ Enumerable.Range(1, 50).ToList().ForEach(x =>
 
 #endregion
 
-//#region Fanout Exchange
+#region Fanout Exchange
 
-//channel.ExchangeDeclare("logs-fanout", durable: true, type: ExchangeType.Fanout);
+channel.ExchangeDeclare("logs-fanout", durable: true, type: ExchangeType.Fanout);
 
-//Enumerable.Range(1, 50).ToList().ForEach(x =>
-//{
-//    string message = $"log {x}";
+Enumerable.Range(1, 50).ToList().ForEach(x =>
+{
+    string message = $"log {x}";
 
-//    var messageBody = Encoding.UTF8.GetBytes(message);
+    var messageBody = Encoding.UTF8.GetBytes(message);
 
-//    channel.BasicPublish("logs-fanout", "", null, messageBody);
+    channel.BasicPublish("logs-fanout", "", null, messageBody);
 
-//    Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
-//});
+    Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
+});
 
-//#endregion
+#endregion
 
-//#region Work Queue
+#region Work Queue
 
-//channel.QueueDeclare("hello-queue", true, false, false);
+channel.QueueDeclare("hello-queue", true, false, false);
 
-//Enumerable.Range(1, 50).ToList().ForEach(x =>
-//{
-//    string message = $"Message {x}";
+Enumerable.Range(1, 50).ToList().ForEach(x =>
+{
+    string message = $"Message {x}";
 
-//    var messageBody = Encoding.UTF8.GetBytes(message);
+    var messageBody = Encoding.UTF8.GetBytes(message);
 
-//    channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
+    channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
 
-//    Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
-//});
+    Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
+});
 
-//#endregion
+#endregion
 
 Console.ReadLine();

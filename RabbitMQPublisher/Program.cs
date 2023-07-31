@@ -27,38 +27,38 @@ while (true)
 #endregion
 
 #region Default
-////Queue creating
-//channel.QueueDeclare(queue: "example-queue", exclusive: false);
+//Queue creating
+channel.QueueDeclare(queue: "example-queue", exclusive: false);
 
-////Queue Message Send
-//byte[] message = Encoding.UTF8.GetBytes("Hello");
+//Queue Message Send
+byte[] message2 = Encoding.UTF8.GetBytes("Hello");
 
-////Default Exchange Send
-//channel.BasicPublish(exchange: "", routingKey: "example-queue", body: message);
+//Default Exchange Send
+channel.BasicPublish(exchange: "", routingKey: "example-queue", body: message2);
 
-//Console.Read();
+Console.Read();
 #endregion
 
 
 #region Message Durability
-////Connection
-//ConnectionFactory factory = new();
-//factory.Uri = new("");
+//Connection
+ConnectionFactory factory2 = new();
+factory2.Uri = new("");
 
-////Connection activation and channel opening
-//using IConnection connection = factory.CreateConnection();
-//using IModel channel = connection.CreateModel();
+//Connection activation and channel opening
+using IConnection connection2 = factory2.CreateConnection();
+using IModel channel2 = connection2.CreateModel();
 
-//IBasicProperties basicProperties = channel.CreateBasicProperties();
-//basicProperties.Persistent = true;
-////Queue creating
-//channel.QueueDeclare(queue: "example-queue", exclusive: false, durable: true);
+IBasicProperties basicProperties = channel.CreateBasicProperties();
+basicProperties.Persistent = true;
+//Queue creating
+channel2.QueueDeclare(queue: "example-queue", exclusive: false, durable: true);
 
-////Queue Message Send
-//byte[] message = Encoding.UTF8.GetBytes("Hello");
+//Queue Message Send
+byte[] message3 = Encoding.UTF8.GetBytes("Hello");
 
-////Default Exchange Send
-//channel.BasicPublish(exchange: "", routingKey: "example-queue", body: message, basicProperties: basicProperties);
+//Default Exchange Send
+channel.BasicPublish(exchange: "", routingKey: "example-queue", body: message3, basicProperties: basicProperties);
 
-//Console.Read();
+Console.Read();
 #endregion

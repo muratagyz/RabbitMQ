@@ -38,50 +38,50 @@ consumer.Received += (sender, eventArgs) =>
 
 #endregion
 
-//#region Fanout Exchange
+#region Fanout Exchange
 
-//var randomQueueName = channel.QueueDeclare().QueueName;
+var randomQueueName = channel.QueueDeclare().QueueName;
 
-//channel.QueueBind(randomQueueName, "logs-fanout", "", null);
+channel.QueueBind(randomQueueName, "logs-fanout", "", null);
 
-//channel.BasicQos(0, 1, false);
+channel.BasicQos(0, 1, false);
 
-//var consumer = new EventingBasicConsumer(channel);
+var consumer2 = new EventingBasicConsumer(channel);
 
-//channel.BasicConsume(randomQueueName, false, consumer);
+channel.BasicConsume(randomQueueName, false, consumer2);
 
-//consumer.Received += (sender, eventArgs) =>
-//{
-//    var message = Encoding.UTF8.GetString(eventArgs.Body.ToArray());
+consumer2.Received += (sender, eventArgs) =>
+{
+    var message = Encoding.UTF8.GetString(eventArgs.Body.ToArray());
 
-//    Thread.Sleep(1500);
+    Thread.Sleep(1500);
 
-//    Console.WriteLine($"Gelen Mesaj : {message}");
+    Console.WriteLine($"Gelen Mesaj : {message}");
 
-//    channel.BasicAck(eventArgs.DeliveryTag, false);
-//};
+    channel.BasicAck(eventArgs.DeliveryTag, false);
+};
 
-//#endregion
+#endregion
 
-//#region Work Queue
+#region Work Queue
 
-//channel.BasicQos(0, 1, false);
+channel.BasicQos(0, 1, false);
 
-//var consumer = new EventingBasicConsumer(channel);
+var consumer3 = new EventingBasicConsumer(channel);
 
-//channel.BasicConsume("hello-queue", false, consumer);
+channel.BasicConsume("hello-queue", false, consumer3);
 
-//consumer.Received += (sender, eventArgs) =>
-//{
-//    var message = Encoding.UTF8.GetString(eventArgs.Body.ToArray());
+consumer3.Received += (sender, eventArgs) =>
+{
+    var message = Encoding.UTF8.GetString(eventArgs.Body.ToArray());
 
-//    Thread.Sleep(1500);
+    Thread.Sleep(1500);
 
-//    Console.WriteLine($"Gelen Mesaj : {message}");
+    Console.WriteLine($"Gelen Mesaj : {message}");
 
-//    channel.BasicAck(eventArgs.DeliveryTag, false);
-//};
+    channel.BasicAck(eventArgs.DeliveryTag, false);
+};
 
-//#endregion
+#endregion
 
 Console.ReadLine();
